@@ -1,21 +1,30 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
+// Import the Client class using ES modules
+const { Client } = pg;
 
-
-
-const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "drpr",
-    password: "manjureddys1*M",
-    port: 5432,
+const db = new Client({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
 });
 
-db.connect();
+db.connect((err) => {
+    if (err) {
+        console.error('Database connection error:', err);
+        throw err;
+    }
+    console.log('Connected to PostgreSQL database');
+})
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
