@@ -1,0 +1,35 @@
+*{
+    border: 0;
+}
+.firstsection{
+    height: 70vh;
+}
+h1{
+    text-align: center;
+}
+input[type=text]{
+    border: 2px solid  black;
+    margin-top: 2px;
+    
+}
+#login
+{   
+    margin: 5px;
+    height:5px;
+}
+
+p{
+    text-align: center;
+}
+
+#loginbox{
+    display: flex;
+    height: 120px;
+    width: 280px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+     margin-left: 30%;
+    padding-left: 10%;
+
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Medical Delivery System - Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-image: url('../WhatsApp\ Image\ 2025-01-16\ at\ 13.21.07.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.4);
+            background-blend-mode: overlay;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5rem;
+            text-transform: capitalize;
+            margin-bottom: 1rem;
+        }
+
+        .info-text {
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .secondsection {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .registerbox {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            color: white;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #submit {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            background: #2563eb;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #submit:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .registerbox {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .info-text {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Register for Emergency Medical Delivery</h1>
+        <div class="info-text">
+            <p>Join our emergency medical delivery network to ensure you and your family have access to essential medications during floods and natural disasters. Our drone delivery system ensures that vital supplies reach you when traditional access is compromised.</p>
+            <p style="margin-top: 1rem">Create your account now to register your medical needs and location for emergency preparedness.</p>
+        </div>
+    </header>
+
+    <form action="/register" method="post">
+        <section class="secondsection">
+            <div class="registerbox">
+                <label for="username">Username:</label>
+                <input type="text" placeholder="Enter name here" name="username">
+                
+                <label for="password">Password:</label>
+                <input type="text" placeholder="Enter password" name="password">
+                
+                <button id="submit" type="submit">Submit</button>
+            </div>
+        </section>
+    </form>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+
+#map-section {
+    height: 95vh;
+    width: 100%;
+    background-image: url("/flood.jpeg");
+    background-size: cover;
+    position: relative;
+}
+.house-box1 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 2%;
+    left: 7%;
+}
+.house-box2 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 13%;
+    left: 25%;
+}
+.house-box3 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 26%;
+    left: 12%;
+}
+.house-box4 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 37%;
+    left: 4%;
+}
+.house-box5 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 55%;
+    left: 17%;
+}
+.house-box6 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+   
+    top: 80%;
+    left: 42%;
+}
+.house-box7 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 50%;
+    left: 39%;
+}
+
+.house-box8{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 50%;
+    top: 40%;
+}
+.house-box9{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 55%;
+    top: 60%;
+}
+.house-box10{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 65%;
+    top: 60%;
+}
+.house-box11{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 73%;
+    top: 37%;
+}
+.house-box12{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 88%;
+    top: 17%;
+}
+.house-box13{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 75%;
+    top: 13%;
+}
+.house-box14{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 50%;
+    top: 3%;
+}
+.drones {
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    top: 90%;
+    left: 90%;
+    z-index: 10;
+}
+
+.propeller {
+    opacity: 0; /* Hidden by default */
+}
+
+.moving .propeller {
+    opacity: 1; /* Show when moving */
+}
+
+        .dial-pad {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100px;
+        }
+
+        .dial-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .dial-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <section id="map-section" class="section">
+        <h1>hello <%=username%></h1>
+    <div class="house-box1" id="1"></div>
+    <div class="house-box2" id="2"></div>
+    <div class="house-box3" id="3"></div>
+    <div class="house-box4" id="4"></div>
+    <div class="house-box5" id="5"></div>
+    <div class="house-box6" id="6"></div>
+    <div class="house-box7" id="7"></div>
+    <div class="house-box8" id="8"></div>
+    <div class="house-box9" id="9"></div>
+    <div class="house-box10" id ="10"></div>
+    <div class="house-box11" id ="11"></div>
+    <div class="house-box12" id ="12"></div>
+    <div class="house-box13" id ="13"></div>
+    <div class="house-box14" id ="14"></div>
+<!-- Add 10 more boxes -->
+   </section>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const username = "<%= username %>";
+        console.log("Username:", username);
+    
+        // Global variables
+        let houseQueue = [];
+        let isDroneMoving = false;
+        let currentPosition = { x: 0, y: 0 };
+        let drone = null;
+
+     if(username!=="admin"){   
+    const houses = document.querySelectorAll('[class^="house-box"]');
+
+houses.forEach(house => {
+    house.addEventListener('click', async function() {
+        const houseId = this.id;
+        this.setAttribute('data-username', username);
+
+        try {
+            const response = await fetch('/update-house', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    house_id: houseId
+                })
+            });
+
+            if(response.ok) {
+                alert('House selected successfully');
+                window.location.href = '/dashboard'; // Or redirect as needed
+            }
+        } catch(error) {
+            console.error('Error:', error);
+            alert('Failed to select house');
+        }
+    });
+});
+     }
+    
+        // Propeller animation control functions
+        function startPropellers() {
+            const animations = drone.querySelectorAll('animateTransform');
+            animations.forEach(anim => {
+                anim.beginElement();
+            });
+            drone.classList.add('moving');
+        }
+        
+        function stopPropellers() {
+            const animations = drone.querySelectorAll('animateTransform');
+            animations.forEach(anim => {
+                anim.endElement();
+            });
+            drone.classList.remove('moving');
+        }
+    
+        // Initialize drone for admin
+        if (username === "admin") {
+            drone = document.createElement("div");
+            drone.classList.add("drones");
+    
+            const mapSection = document.querySelector(".section");
+            mapSection.appendChild(drone);
+            
+            drone.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <!-- Main drone body -->
+            <circle cx="100" cy="100" r="30" fill="black"/>
+            
+            <!-- Propeller arms rotated 45 degrees -->
+            <line x1="70" y1="70" x2="50" y2="50" stroke="black" stroke-width="6"/>
+            <line x1="130" y1="130" x2="150" y2="150" stroke="black" stroke-width="6"/>
+            <line x1="70" y1="130" x2="50" y2="150" stroke="black" stroke-width="6"/>
+            <line x1="130" y1="70" x2="150" y2="50" stroke="black" stroke-width="6"/>
+            
+            <!-- Propellers with animation -->
+            <g class="propeller propeller-1">
+                <line x1="30" y1="30" x2="70" y2="70" stroke="gray" stroke-width="4">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 50 50"
+                        to="360 50 50"
+                        dur="0.5s"
+                        repeatCount="indefinite"
+                        begin="indefinite"
+                    />
+                </line>
+            </g>
+            
+            <g class="propeller propeller-2">
+                <line x1="130" y1="130" x2="170" y2="170" stroke="gray" stroke-width="4">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 150 150"
+                        to="360 150 150"
+                        dur="0.5s"
+                        repeatCount="indefinite"
+                        begin="indefinite"
+                    />
+                </line>
+            </g>
+            
+            <g class="propeller propeller-3">
+                <line x1="30" y1="170" x2="70" y2="130" stroke="gray" stroke-width="4">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 50 150"
+                        to="360 50 150"
+                        dur="0.5s"
+                        repeatCount="indefinite"
+                        begin="indefinite"
+                    />
+                </line>
+            </g>
+            
+            <g class="propeller propeller-4">
+                <line x1="130" y1="70" x2="170" y2="30" stroke="gray" stroke-width="4">
+                    <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 150 50"
+                        to="360 150 50"
+                        dur="0.5s"
+                        repeatCount="indefinite"
+                        begin="indefinite"
+                    />
+                </line>
+            </g>
+        </svg>`;
+    
+            // Click event on the drone to start moving
+            drone.addEventListener("click", () => {
+                if (!isDroneMoving) {
+                    if (houseQueue.length > 0) {
+                        moveDroneToNextHouse();
+                    } else {
+                        console.log("Fetching new houses...");
+                        fetchColdHouses().then(() => {
+                            if (houseQueue.length > 0) moveDroneToNextHouse();
+                        });
+                    }
+                }
+            });
+    
+            // Initial fetch for cold houses
+            fetchColdHouses();
+        }
+    
+        // Fetch cold houses from the backend
+        async function fetchColdHouses() {
+            try {
+                const response = await fetch("/get-cold-houses", {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    houseQueue = data.house_ids || [];
+                    console.log("Cold houses fetched:", houseQueue);
+                } else {
+                    throw new Error("Failed to fetch cold houses.");
+                }
+            } catch (error) {
+                console.error("Error fetching cold houses:", error);
+            }
+        }
+    
+        // Reset the drone to the initial position
+        function resetDrone(callback) {
+            startPropellers();
+            
+            drone.style.transform = "translate(0, 0)";
+            drone.style.transition = "transform 2s ease-in-out";
+            
+            currentPosition = { x: 0, y: 0 };
+            
+            setTimeout(() => {
+                stopPropellers();
+                isDroneMoving = false;
+                if (callback) callback();
+            }, 2000);
+        }
+    
+        // Calculate relative movement from current position to target
+        function calculateRelativeMovement(currentRect, targetRect) {
+            const xMove = targetRect.left - currentRect.left + (targetRect.width - currentRect.width) / 2;
+            const yMove = targetRect.top - currentRect.top + (targetRect.height - currentRect.height) / 2;
+            
+            const newX = currentPosition.x + xMove;
+            const newY = currentPosition.y + yMove;
+            
+            return { x: newX, y: newY };
+        }
+    
+        // Move the drone to the next house in the queue
+        function moveDroneToNextHouse() {
+            if (isDroneMoving) return;
+            
+            if (houseQueue.length === 0) {
+                console.log("No more houses in the queue.");
+                resetDrone();
+                return;
+            }
+    
+            isDroneMoving = true;
+            const houseId = houseQueue[0];
+            const targetHouse = document.getElementById(houseId);
+    
+            if (targetHouse) {
+                moveDroneToHouse(targetHouse, () => {
+                    console.log("Drone reached house:", houseId);
+                    createDialPad(targetHouse.getBoundingClientRect(), houseId);
+                });
+            } else {
+                console.error("House not found for ID:", houseId);
+                houseQueue.shift();
+                isDroneMoving = false;
+                moveDroneToNextHouse();
+            }
+        }
+    
+        // Move the drone to a specific house using relative positioning
+        function moveDroneToHouse(houseElement, callback) {
+            startPropellers();
+            
+            const droneRect = drone.getBoundingClientRect();
+            const houseRect = houseElement.getBoundingClientRect();
+            
+            const newPosition = calculateRelativeMovement(droneRect, houseRect);
+            currentPosition = newPosition;
+            
+            drone.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
+            drone.style.transition = "transform 2s ease-in-out";
+    
+            setTimeout(() => {
+                stopPropellers();
+                callback();
+            }, 2000);
+        }
+    
+        // Create a dial pad near the house
+        function createDialPad(houseRect, houseId) {
+            const dialPad = document.createElement("div");
+            dialPad.classList.add("dial-pad");
+    
+            dialPad.style.position = "absolute";
+            dialPad.style.left = `${houseRect.left + houseRect.width / 2}px`;
+            dialPad.style.top = `${houseRect.top + houseRect.height + 10}px`;
+    
+            for (let i = 1; i <= 9; i++) {
+                const button = document.createElement("button");
+                button.textContent = i;
+                button.classList.add("dial-button");
+    
+                button.addEventListener("click", () => {
+                    handleDialPadInput(i, houseId, dialPad);
+                });
+    
+                dialPad.appendChild(button);
+            }
+    
+            document.body.appendChild(dialPad);
+        }
+    
+        // Handle dial pad input and close the dial pad
+        async function handleDialPadInput(number, houseId, dialPad) {
+            const needs = {
+                1: "water",
+                2: "food",
+                3: "medicine",
+            };
+    
+            const selectedNeed = needs[number] || "unknown";
+            console.log(`User selected: ${selectedNeed}`);
+    
+            try {
+                const response = await fetch("/update-need", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ house_id: houseId, need: selectedNeed }),
+                });
+    
+                if (response.ok) {
+                    console.log(`Request for ${selectedNeed} sent successfully.`);
+                    dialPad.remove();
+                    houseQueue.shift();
+                    
+                    setTimeout(() => {
+                        if (houseQueue.length > 0) {
+                            isDroneMoving = false;
+                            moveDroneToNextHouse();
+                        } else {
+                            resetDrone();
+                        }
+                    }, 1000);
+                } else {
+                    throw new Error("Failed to send request.");
+                }
+            } catch (error) {
+                console.error("Error sending request:", error);
+                dialPad.remove();
+                isDroneMoving = false;
+            }
+        }
+    });
+        
+    </script>   
+</html>

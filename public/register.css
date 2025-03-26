@@ -1,0 +1,35 @@
+*{
+    margin: 0%;
+
+}
+.secondsection{
+    height: 70vh;
+
+}
+
+
+h1{
+    margin-top: 2%;
+    text-align: center;
+    
+}
+input[type=text]{
+    margin-top: 2px;
+}
+#submit{
+    height: 25px;
+    margin-top: 2px;
+}
+
+.registerbox{
+    
+    margin-top: 10%;
+    height: 120px;
+    width: 280px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-left: 30%;
+    padding-left: 10%;
+
+}

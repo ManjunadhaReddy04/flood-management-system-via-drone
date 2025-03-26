@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+
+#map-section {
+    height: 95vh;
+    width: 100%;
+    background-image: url("/noflood.jpeg");
+    background-size: cover;
+    position: relative;
+}
+.house-box1 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 2%;
+    left: 7%;
+}
+.house-box2 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 13%;
+    left: 25%;
+}
+.house-box3 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 26%;
+    left: 12%;
+}
+.house-box4 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 37%;
+    left: 4%;
+}
+.house-box5 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 55%;
+    left: 17%;
+}
+.house-box6 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+   
+    top: 80%;
+    left: 42%;
+}
+.house-box7 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.3);
+    
+    top: 50%;
+    left: 39%;
+}
+
+.house-box8{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 50%;
+    top: 40%;
+}
+.house-box9{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 55%;
+    top: 60%;
+}
+.house-box10{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 65%;
+    top: 60%;
+}
+.house-box11{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+    
+    left: 73%;
+    top: 37%;
+}
+.house-box12{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 88%;
+    top: 17%;
+}
+.house-box13{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 75%;
+    top: 13%;
+}
+.house-box14{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: rgba(249, 3, 102, 0.3);
+   
+    left: 50%;
+    top: 3%;
+}
+</style>
+</head>
+<body>
+    
+    <section id="map-section" class="section">
+        <h1>hello <%=username%></h1>
+    <div class="house-box1" id="1"></div>
+    <div class="house-box2" id="2"></div>
+    <div class="house-box3" id="3"></div>
+    <div class="house-box4" id="4"></div>
+    <div class="house-box5" id="5"></div>
+    <div class="house-box6" id="6"></div>
+    <div class="house-box7" id="7"></div>
+    <div class="house-box8" id="8"></div>
+    <div class="house-box9" id="9"></div>
+    <div class="house-box10" id ="10"></div>
+    <div class="house-box11" id ="11"></div>
+    <div class="house-box12" id ="12"></div>
+    <div class="house-box13" id ="13"></div>
+    <div class="house-box14" id ="14"></div>
+<!-- Add 10 more boxes -->
+   </section>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const username = "<%= username %>";
+        console.log("Username:", username);
+         if(username!=="admin"){   
+    const houses = document.querySelectorAll('[class^="house-box"]');
+
+houses.forEach(house => {
+    house.addEventListener('click', async function() {
+        const houseId = this.id;
+        this.setAttribute('data-username', username);
+
+        try {
+            const response = await fetch('/update-house', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    house_id: houseId
+                })
+            });
+
+            if(response.ok) {
+                
+                alert(`House selected ${houseId} successfully`);
+                window.location.href = '/about.html'; // Or redirect as needed
+            }
+        } catch(error) {
+            console.error('Error:', error);
+            alert('Failed to select house');
+        }
+    });
+});
+     }
+    });
+</script>

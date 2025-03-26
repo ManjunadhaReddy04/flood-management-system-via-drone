@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Emergency Medical Delivery System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding-top: 60px;
+        }
+
+        nav {
+            background: #1a365d;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav button, nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        nav button:hover, nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #1a365d;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .about-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a365d;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #1a365d;
+            margin: 1.5rem 0;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .mission-section {
+            background: #1a365d;
+            color: white;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .mission-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #1a365d;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            nav {
+                position: static;
+            }
+
+            body {
+                padding-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <button>Home</button>
+            <a>Contact</a>
+            <form action="/map" method="get" style="margin: 0">
+                <input type="hidden" name="username" value="<%= username %>">
+                <button type="submit">Go to Map</button>
+            </form>
+            <a href="/about.html">About Us</a>
+            <a href="/logout">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>About Emergency Medical Delivery System</h1>
+
+        <div class="about-section">
+            <h2>Our Story</h2>
+            <p>Established in 2023, the Emergency Medical Delivery System was born from a critical need identified during severe flooding in coastal regions. We witnessed how communities were cut off from essential medical supplies, leading to the innovative solution of drone-based medical deliveries.</p>
+            
+            <h2>What We Do</h2>
+            <p>Our system utilizes advanced drone technology to deliver vital medications to flood-affected areas where traditional transportation methods fail. We maintain a network of strategic dispatch points and work closely with local healthcare providers to ensure continuous medical supply access during emergencies.</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Successful Deliveries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Flood Emergencies Served</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2000+</div>
+                <div class="stat-label">Lives Impacted</div>
+            </div>
+        </div>
+
+        <div class="mission-section">
+            <h2>Our Mission</h2>
+            <p>To ensure no patient goes without essential medication during natural disasters by leveraging technology for humanitarian assistance.</p>
+        </div>
+
+        <div class="about-section">
+            <h2>Major Achievements</h2>
+            <p>Successfully delivered medical supplies during severe flooding events in:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                <li>Coastal Region Flood (2024) - Served 300+ patients</li>
+                <li>River Basin Emergency (2024) - Continuous supply for 2 weeks</li>
+                <li>Monsoon Crisis (2023) - Emergency response within 2 hours</li>
+            </ul>
+            
+            <h2>Future Vision</h2>
+            <p>We aim to expand our services to more coastal regions and develop an even more robust emergency response system. Our goal is to establish a model that can be replicated in flood-prone areas worldwide.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Emergency Medical Delivery System</p>
+        <p>Providing essential medical supplies during emergencies</p>
+    </footer>
+</body>
+</html>
